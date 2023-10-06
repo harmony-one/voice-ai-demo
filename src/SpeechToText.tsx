@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {CheetahTranscript, Cheetah, CheetahModel} from '@picovoice/cheetah-web'
 import { WebVoiceProcessor } from '@picovoice/web-voice-processor'
 
-const accessKey = 'wKeLU3VQXdHPD5ekkQjwZfDWHWZxl9VSHi/mizxA2w4Tc1JM8EmsYg=='
+const accessKey = ''
 
 const modelParams: CheetahModel = {
   publicPath: 'cheetah_params.pv',

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {CheetahTranscript, Cheetah, CheetahModel} from '@picovoice/cheetah-web'
 import { WebVoiceProcessor } from '@picovoice/web-voice-processor'
 
-const accessKey = ''
+const accessKey = 'wKeLU3VQXdHPD5ekkQjwZfDWHWZxl9VSHi/mizxA2w4Tc1JM8EmsYg=='
 
 const modelParams: CheetahModel = {
   publicPath: 'cheetah_params.pv',
@@ -15,14 +15,15 @@ const modelParams: CheetahModel = {
 }
 
 export const SpeechToText = () => {
-  const [transcriptText, setTranscriptText] = useState('')
+  const [isInitialized, setInitialized] = useState(false)
+  const [transcriptions, setTranscriptions] = useState<string[]>([])
 
   const transcriptionCallback = (transcript: CheetahTranscript) => {
     // console.log('transcript', transcript)
     const text = transcript.transcript
-    console.log('text', text)
     if(text) {
-      setTranscriptText(text)
+      console.log('Text: ', text)
+      setTranscriptions(transcriptions => [...transcriptions, text])
     }
   }
 
@@ -43,15 +44,32 @@ export const SpeechToText = () => {
           }
         );
         await WebVoiceProcessor.subscribe(cheetah);
+        setInitialized(true)
         console.log('Cheetah initialized')
       } catch (e) {
         console.error('Cannot init cheetah:', e)
       }
     }
-    initCheetah()
-  }, []);
+    if(!isInitialized) {
+      initCheetah()
+    }
+  }, [isInitialized]);
 
-  return <div style={{ marginTop: '32px' }}>
-    <div style={{ fontSize: '20px' }}>Result: {transcriptText}</div>
+  return <div style={{ marginTop: '32px', marginLeft: '32px', textAlign: 'left' }}>
+    <div style={{ fontSize: '20px' }}>
+      {!isInitialized ? 'Wait for model initialization...' : 'Say something...'}
+    </div>
+    <div style={{ marginTop: '16px', fontSize: '32px', color: '#12486B' }}>
+      {transcriptions[transcriptions.length - 1]}
+    </div>
+    <div style={{ marginTop: '16px', maxHeight: '200px' }}>
+      {[...transcriptions]
+        .reverse()
+        .filter((_, index) => index > 0)
+        .map(item => {
+          return <div style={{ color: 'gray' }}>{item}</div>
+        })
+      }
+    </div>
   </div>
 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {CheetahTranscript, Cheetah, CheetahModel} from '@picovoice/cheetah-web'
 import { WebVoiceProcessor } from '@picovoice/web-voice-processor'
 
+// Get your key here: https://console.picovoice.ai/
 const accessKey = ''
 
 const modelParams: CheetahModel = {

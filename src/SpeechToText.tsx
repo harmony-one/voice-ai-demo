@@ -60,9 +60,6 @@ export const SpeechToText = () => {
     <div style={{ fontSize: '20px' }}>
       {!isInitialized ? 'Wait for model initialization...' : 'Say something...'}
     </div>
-    <div style={{ marginTop: '16px', fontSize: '36px', color: '#12486B' }}>
-      {transcriptions[transcriptions.length - 1]}
-    </div>
     <div style={{
       marginTop: '16px',
       width: '400px',
@@ -72,6 +69,9 @@ export const SpeechToText = () => {
       padding: '8px',
       overflowY: 'scroll'
     }}>
+      <div style={{ fontSize: '36px', color: '#12486B' }}>
+        {transcriptions[transcriptions.length - 1]}
+      </div>
       {[...transcriptions]
         .reverse()
         .filter((_, index) => index > 0)
